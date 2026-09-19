@@ -1,0 +1,6 @@
+{
+  "name": "拼豆助手",
+  "description": "专为拼豆工匠与像素艺术爱好者打造的高精度拼豆画布设计与分块施工助手，支持多规格针板、区域批次拼装、实时色盒指引与施工统计。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

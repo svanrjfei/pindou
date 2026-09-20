@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ScreenType, StrategyMode } from '../types';
 import {
   ChevronLeft,
-  User,
   Check,
   ArrowRight,
   SlidersHorizontal,
@@ -10,6 +9,7 @@ import {
   LayoutGrid,
   AlignJustify,
   Compass,
+  HelpCircle,
 } from 'lucide-react';
 
 interface StrategyScreenProps {
@@ -85,18 +85,25 @@ export const StrategyScreen: React.FC<StrategyScreenProps> = ({
   return (
     <div className="flex flex-col w-full min-h-screen pb-safe bg-[#F8F9FF] select-none">
       {/* Top Header */}
-      <header className="sticky top-0 w-full z-30 pt-safe bg-[#F8F9FF]/85 backdrop-blur-xl border-b border-[#D7E1EE]/50">
+      <header className="sticky top-0 w-full z-30 pt-safe bg-white/90 backdrop-blur-xl border-b border-[#E2E8F4]/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all">
         <div className="h-14 px-4 flex items-center justify-between">
-          <button
-            onClick={onBack}
-            className="w-10 h-10 -ml-2 rounded-full flex items-center justify-center text-[#001C39] hover:bg-[#E6EEFF]"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-          <h1 className="text-[17px] font-bold text-[#001C39]">选择拼法</h1>
-          <div className="w-8 h-8 rounded-full bg-[#0057C0] text-white flex items-center justify-center">
-            <User className="w-4 h-4" />
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onBack}
+              className="w-9 h-9 -ml-1.5 rounded-xl flex items-center justify-center text-slate-700 hover:bg-slate-100 active:scale-95 transition-all"
+              title="返回"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <h1 className="text-[17px] font-extrabold text-[#0F1D32] tracking-tight">施工拼装策略</h1>
           </div>
+          <button
+            onClick={() => onShowToast('策略提示：推荐「区域+批次」，兼顾防呆定位与少换料')}
+            className="w-9 h-9 rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition active:scale-95"
+            title="策略说明"
+          >
+            <HelpCircle className="w-4 h-4 text-slate-600" />
+          </button>
         </div>
       </header>
 

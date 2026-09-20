@@ -3,7 +3,6 @@ import { ScreenType } from '../types';
 import {
   ChevronLeft,
   MoreHorizontal,
-  User,
   LayoutGrid,
   Check,
   Inbox,
@@ -15,6 +14,7 @@ import {
   ArrowRight,
   X,
   Sliders,
+  RotateCcw,
 } from 'lucide-react';
 
 interface ConstructionSettingsScreenProps {
@@ -46,26 +46,31 @@ export const ConstructionSettingsScreen: React.FC<ConstructionSettingsScreenProp
   return (
     <div className="flex flex-col w-full min-h-screen pb-safe bg-[#F8F9FF] select-none">
       {/* Top Header */}
-      <header className="sticky top-0 w-full z-30 pt-safe bg-[#F8F9FF]/85 backdrop-blur-xl border-b border-[#D7E1EE]/50">
+      <header className="sticky top-0 w-full z-30 pt-safe bg-white/90 backdrop-blur-xl border-b border-[#E2E8F4]/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all">
         <div className="h-14 px-4 flex items-center justify-between">
-          <button
-            onClick={onBack}
-            className="w-10 h-10 -ml-2 rounded-full flex items-center justify-center text-[#001C39] hover:bg-[#E6EEFF]"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-          <h1 className="text-[17px] font-bold text-[#001C39]">施工设置</h1>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <button
-              onClick={() => onShowToast('参数选项配置')}
-              className="w-9 h-9 rounded-full flex items-center justify-center text-[#001C39] hover:bg-[#E6EEFF]"
+              onClick={onBack}
+              className="w-9 h-9 -ml-1.5 rounded-xl flex items-center justify-center text-slate-700 hover:bg-slate-100 active:scale-95 transition-all"
+              title="返回"
             >
-              <MoreHorizontal className="w-5 h-5" />
+              <ChevronLeft className="w-5 h-5" />
             </button>
-            <div className="w-8 h-8 rounded-full bg-[#0057C0] text-white flex items-center justify-center ml-1">
-              <User className="w-4 h-4" />
-            </div>
+            <h1 className="text-[17px] font-extrabold text-[#0F1D32] tracking-tight">施工参数规划</h1>
           </div>
+          <button
+            onClick={() => {
+              setRegionSize('5x5');
+              setTrayCount(8);
+              setAvoidMishapLock(true);
+              setCenterOutwardOrder(true);
+              onShowToast('已恢复推荐施工默认参数 (5×5 单元 / 8色格)');
+            }}
+            className="w-9 h-9 rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition active:scale-95"
+            title="恢复默认"
+          >
+            <RotateCcw className="w-4 h-4 text-slate-600" />
+          </button>
         </div>
       </header>
 

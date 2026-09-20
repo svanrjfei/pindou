@@ -158,19 +158,23 @@ export const CanvasEditorScreen: React.FC<CanvasEditorScreenProps> = ({
 
   // Apply cell changes with history snapshot
   const updateCell = useCallback((r: number, c: number) => {
+    // If picker tool, handle color selection purely outside setMatrix
+    if (currentTool === 'picker') {
+      const targetColor = matrix[r]?.[c];
+      if (targetColor) {
+        setSelectedColor(targetColor);
+        setCurrentTool('brush');
+        onShowToast(`已吸取颜色: ${targetColor}`);
+      }
+      return;
+    }
+
     setMatrix((prev) => {
       const newM = prev.map((row) => [...row]);
       if (currentTool === 'brush') {
         newM[r][c] = selectedColor;
       } else if (currentTool === 'eraser') {
         newM[r][c] = null;
-      } else if (currentTool === 'picker') {
-        if (newM[r][c]) {
-          setSelectedColor(newM[r][c]!);
-          setCurrentTool('brush');
-          onShowToast(`已吸取颜色: ${newM[r][c]}`);
-        }
-        return prev;
       } else if (currentTool === 'bucket') {
         const target = newM[r][c];
         if (target === selectedColor) return prev;
@@ -192,7 +196,7 @@ export const CanvasEditorScreen: React.FC<CanvasEditorScreenProps> = ({
       }
       return newM;
     });
-  }, [currentTool, selectedColor, onShowToast]);
+  }, [currentTool, selectedColor, onShowToast, matrix, size]);
 
   const handlePointerDown = (r: number, c: number) => {
     isPointerDownRef.current = true;
@@ -241,41 +245,49 @@ export const CanvasEditorScreen: React.FC<CanvasEditorScreenProps> = ({
   return (
     <div className="flex flex-col w-full h-screen overflow-hidden bg-[#F5F9FF] select-none">
       {/* 1. Top Navbar */}
-      <header className="w-full pt-safe bg-[#F5F9FF]/95 backdrop-blur-md z-40 border-b border-[#D8E5F8]/60 flex-shrink-0">
-        <div className="h-12 px-4 flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
+      <header className="w-full pt-safe bg-white/90 backdrop-blur-xl z-40 border-b border-[#E2E8F4]/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex-shrink-0">
+        <div className="h-14 px-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
             <button
               onClick={onBack}
-              className="w-9 h-9 -ml-1.5 rounded-full flex items-center justify-center text-[#163355] active:bg-[#E5EFFE]"
+              className="w-9 h-9 -ml-1.5 rounded-xl flex items-center justify-center text-slate-700 hover:bg-slate-100 active:scale-95 transition-all"
+              title="返回"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5" />
             </button>
-            <h1 className="font-bold text-[17px] text-[#163355]">编辑</h1>
-            <span className="ml-1.5 px-2 py-0.5 rounded-full bg-[#E5EFFE] text-[#0057C0] text-[11px] font-semibold border border-[#0057C0]/20">
-              28×28 标板
-            </span>
+            <div className="flex items-center gap-2">
+              <h1 className="font-extrabold text-[16px] text-[#0F1D32] tracking-tight">柴犬挂件</h1>
+              <span className="px-2 py-0.5 rounded-full bg-[#E8F1FF] text-[#0057C0] text-[11px] font-bold">
+                28×28 标板
+              </span>
+            </div>
           </div>
 
-          <div className="flex items-center gap-1">
-            <button
-              onClick={handleUndo}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-[#163355] hover:bg-[#E5EFFE] active:scale-90"
-              title="撤销"
-            >
-              <Undo2 className="w-4 h-4" />
-            </button>
-            <button
-              onClick={handleRedo}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-[#829ab1] hover:bg-[#E5EFFE] active:scale-90"
-              title="重做"
-            >
-              <Redo2 className="w-4 h-4" />
-            </button>
+          <div className="flex items-center gap-2">
+            {/* Undo / Redo Group */}
+            <div className="flex items-center bg-slate-100/90 rounded-xl p-0.5 border border-slate-200/70">
+              <button
+                onClick={handleUndo}
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-700 hover:bg-white hover:shadow-xs active:scale-90 transition-all"
+                title="撤销"
+              >
+                <Undo2 className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={handleRedo}
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-white hover:shadow-xs active:scale-90 transition-all"
+                title="重做"
+              >
+                <Redo2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
             <button
               onClick={() => onNavigate('preview')}
-              className="h-7 px-3.5 ml-1 rounded-full bg-[#0057C0] hover:bg-[#004397] text-white font-semibold text-[13px] shadow-[0_2px_8px_rgba(0,87,192,0.35)] active:scale-95 transition-all flex items-center gap-0.5"
+              className="h-9 px-3.5 rounded-xl bg-[#0057C0] hover:bg-[#004397] text-white font-bold text-[13px] shadow-[0_2px_8px_rgba(0,87,192,0.25)] active:scale-95 transition-all flex items-center gap-1"
             >
-              <span>完成</span>
+              <span>预览</span>
+              <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </button>
           </div>
         </div>

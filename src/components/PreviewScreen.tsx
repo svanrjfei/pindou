@@ -35,27 +35,38 @@ export const PreviewScreen: React.FC<PreviewScreenProps> = ({
   return (
     <div className="flex flex-col w-full h-screen overflow-hidden bg-[#F8F9FE] select-none">
       {/* Top Header */}
-      <header className="w-full pt-safe bg-[#F8F9FE]/90 backdrop-blur-md z-40 flex-shrink-0 border-b border-[#D7E1EE]/40">
-        <div className="h-12 px-4 flex items-center justify-between">
-          <button
-            onClick={onBack}
-            className="w-10 h-10 -ml-2 rounded-full flex items-center justify-center text-[#111C2D] hover:bg-[#E7EEF8] active:scale-95"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-          <h1 className="text-[17px] font-bold tracking-tight text-[#111C2D]">预览</h1>
-          <div className="flex items-center gap-1">
+      <header className="w-full pt-safe bg-white/90 backdrop-blur-xl z-40 flex-shrink-0 border-b border-[#E2E8F4]/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
+        <div className="h-14 px-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onBack}
+              className="w-9 h-9 -ml-1.5 rounded-xl flex items-center justify-center text-slate-700 hover:bg-slate-100 active:scale-95 transition-all"
+              title="返回"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <div className="flex items-center gap-2">
+              <h1 className="text-[17px] font-extrabold text-[#0F1D32] tracking-tight">作品全景预览</h1>
+              <span className="px-2 py-0.5 rounded-full bg-[#E8F1FF] text-[#0057C0] text-[11px] font-bold">
+                柴犬 #01
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5">
             <button
               onClick={() => onShowToast('已生成高清作品分享图卡')}
-              className="w-9 h-9 rounded-full flex items-center justify-center text-[#111C2D] hover:bg-[#E7EEF8]"
+              className="w-9 h-9 rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition active:scale-95"
+              title="分享"
             >
-              <Share2 className="w-5 h-5" />
+              <Share2 className="w-4 h-4 text-slate-600" />
             </button>
             <button
-              onClick={() => onShowToast('更多选项：导出 PDF 图纸、色号统计表')}
-              className="w-9 h-9 rounded-full flex items-center justify-center text-[#111C2D] hover:bg-[#E7EEF8]"
+              onClick={() => onShowToast('更多选项：导出 PDF 图纸、色号采购清单')}
+              className="w-9 h-9 rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition active:scale-95"
+              title="更多"
             >
-              <MoreHorizontal className="w-5 h-5" />
+              <MoreHorizontal className="w-4 h-4 text-slate-600" />
             </button>
           </div>
         </div>

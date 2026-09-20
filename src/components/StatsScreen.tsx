@@ -39,17 +39,20 @@ export const StatsScreen: React.FC<StatsScreenProps> = ({ onShowToast }) => {
   return (
     <div className="flex flex-col w-full min-h-screen pb-24 bg-[#F8F9FF] select-none">
       {/* Top Header */}
-      <header className="sticky top-0 w-full z-30 pt-safe bg-[#F8F9FF]/85 backdrop-blur-xl border-b border-[#D7E1EE]/50">
+      <header className="sticky top-0 w-full z-30 pt-safe bg-white/90 backdrop-blur-xl border-b border-[#E2E8F4]/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all">
         <div className="h-14 px-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <BarChart3 className="w-5 h-5 text-[#0057C0]" />
-            <h1 className="text-[18px] font-bold text-[#001C39]">拼豆统计与分析</h1>
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-[#E8F1FF] text-[#0057C0] flex items-center justify-center">
+              <BarChart3 className="w-4 h-4 stroke-[2.5]" />
+            </div>
+            <h1 className="text-[17px] font-extrabold text-[#0F1D32] tracking-tight">创作与施工统计</h1>
           </div>
           <button
             onClick={() => onShowToast('已导出本月色号补货清单与报表')}
-            className="w-9 h-9 rounded-full flex items-center justify-center text-[#001C39] hover:bg-[#E6EEFF]"
+            className="w-9 h-9 rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition active:scale-95"
+            title="导出统计与采购清单"
           >
-            <Download className="w-5 h-5" />
+            <Download className="w-4 h-4 text-slate-600" />
           </button>
         </div>
       </header>

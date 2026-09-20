@@ -92,21 +92,27 @@ export const ActiveWorkbenchScreen: React.FC<ActiveWorkbenchScreenProps> = ({
   const currentActiveCell = trayCells.find((c) => c.slot === activeSlot) || trayCells[0];
 
   const handleCellClick = (idx: number) => {
+    const targetCell = subGrid[idx];
+    if (!targetCell) return;
+
+    const willBePlaced = !targetCell.placed;
+
+    // 1. Update subGrid state purely
     setSubGrid((prev) => {
       const updated = [...prev];
-      const isAlreadyPlaced = updated[idx].placed;
-      updated[idx] = { ...updated[idx], placed: !isAlreadyPlaced };
-
-      if (!isAlreadyPlaced) {
-        setPlacedCount((c) => Math.min(totalCount, c + 1));
-        if (soundEnabled) {
-          onShowToast(`啪嗒！钉位 ${idx + 1} 拼豆已就位`);
-        }
-      } else {
-        setPlacedCount((c) => Math.max(0, c - 1));
-      }
+      updated[idx] = { ...updated[idx], placed: willBePlaced };
       return updated;
     });
+
+    // 2. Update count outside the reducer callback
+    if (willBePlaced) {
+      setPlacedCount((c) => Math.min(totalCount, c + 1));
+      if (soundEnabled) {
+        onShowToast(`啪嗒！钉位 ${idx + 1} 拼豆已就位`);
+      }
+    } else {
+      setPlacedCount((c) => Math.max(0, c - 1));
+    }
   };
 
   const handleCompleteBatch = () => {
@@ -117,47 +123,50 @@ export const ActiveWorkbenchScreen: React.FC<ActiveWorkbenchScreenProps> = ({
   return (
     <div className="flex flex-col w-full min-h-screen pb-safe bg-[#F8F9FE] select-none">
       {/* 1. Header */}
-      <header className="sticky top-0 w-full z-40 pt-safe bg-[#F8F9FE]/90 backdrop-blur-md border-b border-[#D7E1EE]/50">
+      <header className="sticky top-0 w-full z-40 pt-safe bg-white/90 backdrop-blur-xl border-b border-[#E2E8F4]/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all">
         <div className="h-14 px-4 flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <button
               onClick={onBack}
-              className="w-10 h-10 -ml-2 rounded-full flex items-center justify-center text-[#111C2D] hover:bg-[#E7EEF8]"
+              className="w-9 h-9 -ml-1.5 rounded-xl flex items-center justify-center text-slate-700 hover:bg-slate-100 active:scale-95 transition-all"
+              title="返回"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <h1 className="text-[16px] font-bold text-[#111C2D]">柴犬挂件 #01</h1>
-                <span className="px-2 py-0.5 rounded-full bg-[#0057C0] text-white text-[10px] font-bold">
-                  第 1 批 4/8
+                <h1 className="text-[16px] font-extrabold text-[#0F1D32] tracking-tight">柴犬挂件 #01</h1>
+                <span className="px-2 py-0.5 rounded-full bg-[#E8F1FF] text-[#0057C0] text-[10px] font-bold">
+                  第 1 批 4/8 色
                 </span>
               </div>
-              <span className="text-[11px] text-[#5B6A82]">标准104板 · 施工工作台</span>
+              <span className="text-[11px] text-[#5B6A82] font-medium leading-none mt-0.5">标准104板 · 施工工作台</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
             <button
               onClick={() => setSoundEnabled(!soundEnabled)}
-              className={`w-9 h-9 rounded-full flex items-center justify-center ${
-                soundEnabled ? 'text-[#0057C0] bg-[#EAF2FF]' : 'text-slate-400 bg-slate-100'
+              className={`w-9 h-9 rounded-xl flex items-center justify-center transition active:scale-95 ${
+                soundEnabled ? 'text-[#0057C0] bg-[#E8F1FF]' : 'text-slate-400 bg-slate-100/80'
               }`}
-              title="提示音"
+              title={soundEnabled ? '提示音：开' : '提示音：关'}
             >
               {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
             </button>
             <button
               onClick={() => onShowToast('分享施工进度')}
-              className="w-9 h-9 rounded-full flex items-center justify-center text-[#111C2D] hover:bg-[#E7EEF8]"
+              className="w-9 h-9 rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition active:scale-95"
+              title="分享"
             >
-              <Share2 className="w-4 h-4" />
+              <Share2 className="w-4 h-4 text-slate-600" />
             </button>
             <button
               onClick={() => onShowToast('更多工具：补豆登记、局部重置')}
-              className="w-9 h-9 rounded-full flex items-center justify-center text-[#111C2D] hover:bg-[#E7EEF8]"
+              className="w-9 h-9 rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition active:scale-95"
+              title="更多"
             >
-              <MoreHorizontal className="w-4 h-4" />
+              <MoreHorizontal className="w-4 h-4 text-slate-600" />
             </button>
           </div>
         </div>

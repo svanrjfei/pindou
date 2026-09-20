@@ -16,7 +16,9 @@ import {
   Trash2,
   X,
   Check,
+  BookOpen,
 } from 'lucide-react';
+import { BeadLogo } from './BeadLogo';
 
 interface PatternsScreenProps {
   patterns: PatternItem[];
@@ -86,35 +88,33 @@ export const PatternsScreen: React.FC<PatternsScreenProps> = ({
       onClick={() => setContextMenuPattern(null)}
     >
       {/* Top Header */}
-      <header className="sticky top-0 w-full z-30 pt-safe bg-[#F8F9FF]/85 backdrop-blur-xl border-b border-[#D7E1EE]/50">
-        <div className="h-16 px-4 flex items-center justify-between">
+      <header className="sticky top-0 w-full z-30 pt-safe bg-white/90 backdrop-blur-xl border-b border-[#E2E8F4]/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all">
+        <div className="h-14 px-4 flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <img
-              src="https://lh3.googleusercontent.com/aida/AEtjO1VEn8u9OtQP_yC_AstAlvnfXnl6zBj_TGgn3oll8pnwUywZALy_TyU47URaWzKvpRV0D3lXt_cFZh4NGHmxRxpsHnYUF9t1uck8FFKUOc8os-tezM6cuP8koPqgqg28o7onv1FhqXBoQFfVCO585dhEZX3DqlpyFgsxzvV4M2gnIebv6o8kSJccSOIl7_BnKiueq2YmAx7j7gobCdDKcRVp6fmkmNqhTutKlcn-fIgdhJJAUy51kHabEYo"
-              alt="Logo"
-              className="h-8 w-auto object-contain rounded-md"
-            />
-            <h1 className="text-[20px] font-bold text-[#001C39] tracking-tight">我的图纸</h1>
+            <BeadLogo size="sm" showText={false} />
+            <div className="flex items-center gap-2">
+              <h1 className="text-[17px] font-extrabold text-[#0F1D32] tracking-tight">图纸中心</h1>
+              <span className="px-2 py-0.5 rounded-full bg-[#E8F1FF] text-[#0057C0] text-[11px] font-bold">
+                {patterns.length} 份
+              </span>
+            </div>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
             <button
-              onClick={() => onShowToast('搜索图纸')}
-              className="w-10 h-10 rounded-full flex items-center justify-center text-[#001C39] hover:bg-[#E6EEFF]"
+              aria-label="搜索图纸"
+              onClick={() => onShowToast('输入关键词搜索图纸...')}
+              className="w-9 h-9 rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition active:scale-95"
+              title="搜索图纸"
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-4 h-4 text-slate-600" />
             </button>
             <button
-              onClick={() => onShowToast('上传自定义像素或网格图纸')}
-              className="w-10 h-10 rounded-full flex items-center justify-center text-[#001C39] hover:bg-[#E6EEFF]"
+              onClick={() => onShowToast('准备导入图纸...支持 PNG/JPG/像素图')}
+              className="h-9 px-3 rounded-xl bg-[#0057C0] hover:bg-[#004397] text-white text-[12px] font-bold flex items-center gap-1.5 shadow-xs transition active:scale-95"
             >
-              <UploadCloud className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => onNavigate('profile')}
-              className="w-8 h-8 rounded-full bg-[#0057C0] text-white flex items-center justify-center ml-1"
-            >
-              <User className="w-4 h-4" />
+              <UploadCloud className="w-4 h-4" />
+              <span>导入图纸</span>
             </button>
           </div>
         </div>

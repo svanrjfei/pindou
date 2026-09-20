@@ -26,22 +26,24 @@ export const QualityInspectionScreen: React.FC<QualityInspectionScreenProps> = (
   return (
     <div className="flex flex-col w-full min-h-screen pb-safe bg-[#F8F9FE] select-none">
       {/* Top Header */}
-      <header className="sticky top-0 w-full z-40 pt-safe bg-[#F8F9FE]/90 backdrop-blur-md border-b border-[#D7E1EE]/50">
+      <header className="sticky top-0 w-full z-40 pt-safe bg-white/90 backdrop-blur-xl border-b border-[#E2E8F4]/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all">
         <div className="h-14 px-4 flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <button
               onClick={onBack}
-              className="w-10 h-10 -ml-2 rounded-full flex items-center justify-center text-[#111C2D] hover:bg-[#E7EEF8]"
+              className="w-9 h-9 -ml-1.5 rounded-xl flex items-center justify-center text-slate-700 hover:bg-slate-100 active:scale-95 transition-all"
+              title="返回"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5" />
             </button>
-            <h1 className="text-[16px] font-bold text-[#111C2D]">批次质检与验收</h1>
+            <h1 className="text-[17px] font-extrabold text-[#0F1D32] tracking-tight">批次质检与验收</h1>
           </div>
           <button
             onClick={() => onShowToast('分享当前拼豆质检报告')}
-            className="w-9 h-9 rounded-full flex items-center justify-center text-[#111C2D] hover:bg-[#E7EEF8]"
+            className="w-9 h-9 rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition active:scale-95"
+            title="分享质检报告"
           >
-            <Share2 className="w-5 h-5" />
+            <Share2 className="w-4 h-4 text-slate-600" />
           </button>
         </div>
       </header>

@@ -10,7 +10,9 @@ import {
   Edit3,
   Flag,
   Lightbulb,
+  X,
 } from 'lucide-react';
+import { BeadLogo } from './BeadLogo';
 
 interface HomeScreenProps {
   projects: CanvasProject[];
@@ -37,52 +39,78 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
   return (
     <div className="flex flex-col w-full min-h-screen pb-24 bg-[#F8F9FF]">
       {/* Top Fixed Header */}
-      <header className="sticky top-0 w-full z-30 pt-safe bg-[#F8F9FF]/85 backdrop-blur-xl border-b border-[#D7E1EE]/50">
-        <div className="h-14 px-4 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <img
-              src="https://lh3.googleusercontent.com/aida/AEtjO1VEn8u9OtQP_yC_AstAlvnfXnl6zBj_TGgn3oll8pnwUywZALy_TyU47URaWzKvpRV0D3lXt_cFZh4NGHmxRxpsHnYUF9t1uck8FFKUOc8os-tezM6cuP8koPqgqg28o7onv1FhqXBoQFfVCO585dhEZX3DqlpyFgsxzvV4M2gnIebv6o8kSJccSOIl7_BnKiueq2YmAx7j7gobCdDKcRVp6fmkmNqhTutKlcn-fIgdhJJAUy51kHabEYo"
-              alt="拼豆助手 Logo"
-              className="h-8 w-auto object-contain rounded-md"
-            />
-            <div className="flex flex-col">
-              <span className="font-bold text-[17px] text-[#001C39] leading-tight">
-                拼豆助手
-              </span>
-              <span className="text-[10px] text-[#5B6A82] tracking-wider">首页</span>
+      <header className="sticky top-0 w-full z-40 pt-safe bg-white/90 backdrop-blur-xl border-b border-[#E2E8F4]/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all">
+        <div className="h-14 px-4 flex items-center justify-between gap-3">
+          {!isSearchOpen ? (
+            <>
+              {/* Left: Brand Logo & Title */}
+              <BeadLogo size="md" subtitle="像素手作工坊" />
+
+              {/* Right: Quick Action Controls */}
+              <div className="flex items-center gap-1.5">
+                <button
+                  aria-label="搜索画布与图纸"
+                  onClick={() => setIsSearchOpen(true)}
+                  className="w-9 h-9 rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition active:scale-95"
+                  title="搜索"
+                >
+                  <Search className="w-4 h-4 text-slate-600" />
+                </button>
+
+                <button
+                  aria-label="新建画板"
+                  onClick={() => onNavigate('create_canvas')}
+                  className="w-9 h-9 rounded-xl bg-[#0057C0] hover:bg-[#004397] text-white flex items-center justify-center shadow-xs transition active:scale-95"
+                  title="新建画板"
+                >
+                  <Plus className="w-4 h-4 stroke-[2.5]" />
+                </button>
+
+                <button
+                  aria-label="个人中心"
+                  onClick={() => onNavigate('profile')}
+                  className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-400 to-orange-500 text-white font-bold text-xs flex items-center justify-center shadow-xs transition active:scale-95 ml-0.5 relative"
+                  title="手作主页"
+                >
+                  <User className="w-4 h-4" />
+                  <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white" />
+                </button>
+              </div>
+            </>
+          ) : (
+            /* Active Inline Search Bar */
+            <div className="flex items-center gap-2 w-full animate-in fade-in zoom-in-95 duration-150">
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="text"
+                  placeholder="搜索画板名称、色号或图纸..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full h-10 pl-9 pr-8 text-[13px] bg-slate-100/90 rounded-xl border border-slate-200/70 focus:outline-none focus:ring-2 focus:ring-[#0057C0]/30 focus:border-[#0057C0] focus:bg-white transition-all text-slate-800 placeholder:text-slate-400"
+                  autoFocus
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+              <button
+                onClick={() => {
+                  setIsSearchOpen(false);
+                  setSearchQuery('');
+                }}
+                className="px-3 h-9 text-[13px] font-semibold text-[#0057C0] hover:bg-[#E8F1FF] rounded-xl transition"
+              >
+                取消
+              </button>
             </div>
-          </div>
-
-          <div className="flex items-center gap-1">
-            <button
-              aria-label="搜索画布"
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="w-10 h-10 rounded-full flex items-center justify-center text-[#001C39] hover:bg-[#E6EEFF] transition-colors"
-            >
-              <Search className="w-5 h-5" />
-            </button>
-            <button
-              aria-label="个人中心"
-              onClick={() => onNavigate('profile')}
-              className="w-8 h-8 rounded-full bg-[#0057C0] text-white flex items-center justify-center ml-1 shadow-sm"
-            >
-              <User className="w-4 h-4" />
-            </button>
-          </div>
+          )}
         </div>
-
-        {isSearchOpen && (
-          <div className="px-4 pb-2">
-            <input
-              type="text"
-              placeholder="搜索图纸或画布名称..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-9 px-3 text-[13px] bg-white rounded-xl border border-[#D7E1EE] focus:outline-none focus:border-[#0057C0]"
-              autoFocus
-            />
-          </div>
-        )}
       </header>
 
       {/* Main Content Area */}

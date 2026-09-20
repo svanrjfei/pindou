@@ -49,25 +49,22 @@ export const CreateCanvasScreen: React.FC<CreateCanvasScreenProps> = ({
   return (
     <div className="flex flex-col w-full min-h-screen pb-32 bg-[#F8F9FF]">
       {/* Top Header */}
-      <header className="sticky top-0 w-full z-30 pt-safe bg-[#F8F9FF]/85 backdrop-blur-xl border-b border-[#D7E1EE]/50">
+      <header className="sticky top-0 w-full z-30 pt-safe bg-white/90 backdrop-blur-xl border-b border-[#E2E8F4]/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all">
         <div className="h-14 px-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <button
               onClick={onBack}
-              className="w-10 h-10 -ml-2 rounded-full flex items-center justify-center text-[#001C39] hover:bg-[#E6EEFF]"
+              className="w-9 h-9 -ml-1.5 rounded-xl flex items-center justify-center text-slate-700 hover:bg-slate-100 active:scale-95 transition-all"
+              title="返回"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5" />
             </button>
-            <img
-              src="https://lh3.googleusercontent.com/aida/AEtjO1VEn8u9OtQP_yC_AstAlvnfXnl6zBj_TGgn3oll8pnwUywZALy_TyU47URaWzKvpRV0D3lXt_cFZh4NGHmxRxpsHnYUF9t1uck8FFKUOc8os-tezM6cuP8koPqgqg28o7onv1FhqXBoQFfVCO585dhEZX3DqlpyFgsxzvV4M2gnIebv6o8kSJccSOIl7_BnKiueq2YmAx7j7gobCdDKcRVp6fmkmNqhTutKlcn-fIgdhJJAUy51kHabEYo"
-              alt="Logo"
-              className="h-7 w-auto object-contain rounded-md"
-            />
-            <span className="text-[13px] font-bold text-[#0057C0]">拼豆画布助手</span>
+            <h1 className="text-[17px] font-extrabold text-[#0F1D32] tracking-tight">新建拼豆画板</h1>
           </div>
-          <h1 className="text-[17px] font-bold text-[#001C39]">新建画布</h1>
-          <div className="w-8 h-8 rounded-full bg-[#0057C0] text-white flex items-center justify-center">
-            <User className="w-4 h-4" />
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-bold text-[#0057C0] bg-[#E8F1FF] px-2.5 py-1 rounded-full">
+              规格设定
+            </span>
           </div>
         </div>
       </header>

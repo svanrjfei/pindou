@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   Sparkles,
   ExternalLink,
+  Settings,
 } from 'lucide-react';
 
 interface ProfileScreenProps {
@@ -26,14 +27,15 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
   return (
     <div className="flex flex-col w-full min-h-screen pb-24 bg-[#F8F9FF] select-none">
       {/* Top Header */}
-      <header className="sticky top-0 w-full z-30 pt-safe bg-[#F8F9FF]/85 backdrop-blur-xl border-b border-[#D7E1EE]/50">
+      <header className="sticky top-0 w-full z-30 pt-safe bg-white/90 backdrop-blur-xl border-b border-[#E2E8F4]/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all">
         <div className="h-14 px-4 flex items-center justify-between">
-          <h1 className="text-[18px] font-bold text-[#001C39]">个人中心</h1>
+          <h1 className="text-[17px] font-extrabold text-[#0F1D32] tracking-tight">个人手作中心</h1>
           <button
-            onClick={() => onShowToast('系统设置')}
-            className="text-[13px] font-bold text-[#0057C0]"
+            onClick={() => onShowToast('系统与偏好设置')}
+            className="w-9 h-9 rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition active:scale-95"
+            title="设置"
           >
-            设置
+            <Settings className="w-4 h-4 text-slate-600" />
           </button>
         </div>
       </header>

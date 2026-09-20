@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { ScreenType, TabType, CanvasProject, PatternItem } from './types';
 import { mockProjects, mockPatterns } from './data/mockData';
 import { HomeScreen } from './components/HomeScreen';
@@ -28,9 +28,13 @@ export default function App() {
   const [patterns] = useState<PatternItem[]>(mockPatterns);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  const showToast = (msg: string) => {
+  const showToast = useCallback((msg: string) => {
     setToastMessage(msg);
-  };
+  }, []);
+
+  const handleCloseToast = useCallback(() => {
+    setToastMessage(null);
+  }, []);
 
   const handleNavigate = (screen: ScreenType) => {
     setScreenHistory((prev) => [...prev, screen]);
@@ -77,7 +81,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-[#F8F9FF] text-[#001C39] font-sans flex flex-col items-center justify-start overflow-x-hidden antialiased">
       {/* Toast Notification Container */}
-      <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
+      <Toast message={toastMessage} onClose={handleCloseToast} />
 
       {/* Screen Router */}
       <div className="w-full flex-1 flex flex-col items-center justify-start">
